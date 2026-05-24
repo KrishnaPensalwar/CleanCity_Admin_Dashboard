@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { formatApiError, type ApiErrorBody } from "@/lib/api-errors";
 
 export default function RemoteDrivers() {
   const [drivers, setDrivers] = useState<any[]>([]);
@@ -51,13 +52,14 @@ export default function RemoteDrivers() {
         },
         body: JSON.stringify({ driverId })
       });
+      const data = (await res.json().catch(() => ({}))) as ApiErrorBody;
       if (res.ok) {
         alert('Assigned successfully');
       } else {
-        alert('Assignment failed');
+        alert(formatApiError(data, 'Assignment failed. Only pending reports can be assigned to an active driver.'));
       }
-    } catch (err) {
-      alert('Error during assignment');
+    } catch {
+      alert('Error during assignment. Please check your connection and try again.');
     }
     load();
   }
