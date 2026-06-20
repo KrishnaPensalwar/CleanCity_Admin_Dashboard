@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const BACKEND = process.env.CC_BACKEND || 'http://localhost:8080';
+const BACKEND = process.env.CC_BACKEND || 'https://wheat-salvaging-underrate.ngrok-free.dev';
 
 export async function POST(
   req: Request,
